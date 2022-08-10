@@ -1,5 +1,5 @@
 /*
- * Desciption: Dinic with current edge optimization
+ * Desciption: Dinic with current edge optimization.
  * Time: O(n^2 m)
  */
 #include <bits/stdc++.h>
