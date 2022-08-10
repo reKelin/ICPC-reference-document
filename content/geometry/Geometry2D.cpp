@@ -92,7 +92,7 @@ int inPolygon(const Poly &p, Vec a, int strict = 1) {
     return t;
 }
 
-// point inside convex hull: O(logn)
+// point inside convex hull: O(log n)
 int inHull(const Poly &h, Vec p, int strict = 1) {
     if (h.empty()) return 0;
     int a = 1, b = h.size() - 1, c, r = !strict;
@@ -104,7 +104,7 @@ int inHull(const Poly &h, Vec p, int strict = 1) {
     return left(h[a], h[b], p) < r;
 }
 
-// convex hull: O(nlogn)
+// convex hull: O(n log n)
 Poly convexHull(Poly p) {
     if (p.size() <= 1) return p;
     sort(p.begin(), p.end());
@@ -118,7 +118,7 @@ Poly convexHull(Poly p) {
     return {h.begin(), h.begin() + t - (t == 2 && h[0] == h[1])};
 }
 
-// halfplane intersection: O(nlogn)
+// halfplane intersection: O(n log n)
 Poly hpInter(vector<Line> L, const T Inf = 1e9) {
     static vector<Line> b = {{{Inf, -Inf}, {0, 1}}, {{Inf, Inf}, {-1, 0}}, {{-Inf, Inf}, {0, -1}}, {{-Inf, -Inf}, {1, 0}}};
     L.insert(L.end(), b.begin(), b.end());
