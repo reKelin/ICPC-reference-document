@@ -113,8 +113,10 @@ struct Poly : public vector<int> {
     // f_i = sum a_{i + j} * T_j
     Poly mulT(const Poly& a) const { return T * a.rev() >> (a.deg() - 1); }
 
-    // solve f_1, ..., f_{n - 1} with f_i = sum f_{i - j} * T_j, f_0 is known
-    // O(n log^2 n)
+    /*
+     * Description: calculate f_1, ..., f_{n - 1} with f_i = sum f_{i - j} * T_j, f_0 is known.
+     * Time: O(n log^2 n)
+     */
     template <typename func>
     Poly semiConv(Poly f, int n, func calc) {
         f.resize(n);
@@ -179,7 +181,10 @@ struct Poly : public vector<int> {
         return {q, r.pre(a.deg() - 1)};
     }
 
-    // [x ^ k](f / g)
+    /*
+     * Description: calculate [x ^ k](f / g)
+     * Time: O(n log n log k)
+     */
     int divAt(Poly f, Poly g, ll k) {
         int n = max(f.deg(), g.deg()), m = norm(n);
         for (; k; k >>= 1) {
@@ -193,9 +198,17 @@ struct Poly : public vector<int> {
         }
         return f[0];
     }
-    // T[k] where T[n] = sum c[i] * T[n - i]
+
+    /*
+     * Description: calculate T[k], where T[n] = sum c[i] * T[n - i]
+     * Time: O(n log n log k)
+     */
     int recur(Poly c, ll k) { return c[0] = P - 1, divAt((T * c).pre(c.deg() - 1), c, k); }
 
+    /*
+     * Description: polynomial multipoint fast evaluation
+     * Time: O(n log^2 n)
+     */
     Poly eval(Poly x) const {
         if (empty()) return Poly(x.deg());
         const int m = x.deg(), n = norm(m);
@@ -217,8 +230,11 @@ struct Poly : public vector<int> {
 };
 
 // useless algorithm
-// G(F(x))
-Poly compound(Poly f, Poly g) { // (5 * sqrt(n) + 3) * M(n) + n ^ 2
+/*
+ * Description: G(F(x))
+ * Time: O((5 sqrt(n) + 3) M(n) + n ^ 2)
+ */
+Poly compound(Poly f, Poly g) {
     int n = f.size(), k = norm(2 * n), L = sqrt(n) + 1;
     vector<Poly> G(L + 1);
     Poly H, h(k), t; // H = g ^ (iL)
@@ -234,8 +250,12 @@ Poly compound(Poly f, Poly g) { // (5 * sqrt(n) + 3) * M(n) + n ^ 2
     }
     return idft(h), h;
 }
-// get F(x) for F(G(x)) = x
-Poly compoundInv(Poly g) { // (4 * sqrt(n) + 2) * M(n) + n ^ 2
+
+/*
+ * Description: get F(x) for F(G(x)) = x
+ * Time: O((4 sqrt(n) + 2) M(n) + n ^ 2)
+ */
+Poly compoundInv(Poly g) { // 
     int n = g.size(), k = norm(2 * n), L = sqrt(n) + 1;
     vector<Poly> G(L + 1);
     Poly H, f(n);
