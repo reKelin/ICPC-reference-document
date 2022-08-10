@@ -15,7 +15,7 @@ struct Simpson {
         if (abs(S - sl - sr) < 15 * eps) return sl + sr + (sl + sr - S) / 15;
         return calc(l, m, sl) + calc(m, r, sr);
     }
-    template<class fun>
+    template <class fun>
     db simpson(fun F, db l, db r) { return f = F, calc(l, r, simp(l, r)); }
 };
 
