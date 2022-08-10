@@ -1,5 +1,5 @@
 /*
- * Description:  Compute a%b about 5 times faster than usual,
+ * Description:  Compute a % b about 5 times faster than usual,
  * where b is constant but not known at compile time.
  */
 #include <bits/stdc++.h>
