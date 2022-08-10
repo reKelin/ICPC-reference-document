@@ -22,7 +22,7 @@ void sieves() {
             if (i % p == 0) break;
         }
     }
-    pr.push_back(N + 1); // N + 1 > sqrt(n)
+    pr.push_back(N + 1); // prevent array access out of bounds
 }
 
 // The complexity is O(sqrt n * H) only if f(p) = p ^ k, \
@@ -41,15 +41,14 @@ struct PN {
 vector<vector<int>> f;
 
 struct fun {
-    static ll g(int p) { return 1; }                                              // g(p) = f(p)
+    static ll g(int p) { return 1; }                                              // g(p) = f(p) = p ^ c
     static ll G(ll n) { return n % P; }                                           // G(n) = sum g
     static ll h(int p, int k, ll pk) { return (f[p][k] - f[p][k - 1] + P) % P; }  // f(p ^ k) = sum g(p ^ {k - i}) * h(p ^ i) -> h(p ^ k)
 } F;
 
 PN<fun, F> pn;
 
-ll n;
-void Gym103306F() {
+void Gym103306F() { // Correctness test
     f.resize(N);
     const ll M = 1e14;
     for (int i = 0; i + 1 < pr.size(); ++i) {
@@ -58,6 +57,7 @@ void Gym103306F() {
         for (int j = 2; q <= M / p; ++j)
             f[p].push_back(POW(j, p)), q *= p;
     }
+    ll n;
     scanf("%lld", &n);
     printf("%d\n", pn.S(n, 0));
 }
