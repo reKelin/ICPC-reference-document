@@ -8,6 +8,8 @@ using namespace std;
 using T = int64_t;
 const T Inf = numeric_limits<T>::max();
 const int N = 2e5 + 5;
+
+int n;
 vector<pair<int, int>> G[N];
 
 vector<T> dijkstra(int S) {
