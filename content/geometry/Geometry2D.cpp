@@ -191,4 +191,4 @@ vector<Line> polygonAxes(Poly a) {
     return axe;
 }
 
-int main() { return 0; };
+int main() { return 0; }
