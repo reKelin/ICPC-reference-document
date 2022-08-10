@@ -114,7 +114,7 @@ struct Poly : public vector<int> {
     Poly mulT(const Poly& a) const { return T * a.rev() >> (a.deg() - 1); }
 
     /*
-     * Description: calculate f_1, ..., f_{n - 1} with f_i = sum f_{i - j} * T_j, f_0 is known.
+     * Description: calculate f_1, ..., f_{n - 1} with f_i = sum f_{i - j} * T_j, T and f_0 is known.
      * Time: O(n log^2 n)
      */
     template <typename func>
