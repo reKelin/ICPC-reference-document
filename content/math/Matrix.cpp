@@ -22,7 +22,7 @@ struct Z {
     }
 };
 
-// Defualt Time: O(n ^ 3)
+// Defualt Time: O(n^3)
 struct Mat : vector<vector<int>> {
 #define T (*this)
     Mat(int n = 0, int m = 0) { T.assign(n, vector<int>(m)); }
