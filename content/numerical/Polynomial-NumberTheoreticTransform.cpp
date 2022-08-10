@@ -232,7 +232,7 @@ struct Poly : public vector<int> {
 // useless algorithm
 /*
  * Description: G(F(x))
- * Time: O((5 sqrt(n) + 3) M(n) + n ^ 2)
+ * Time: O(n sqrt n log n + n ^ 2)
  */
 Poly compound(Poly f, Poly g) {
     int n = f.size(), k = norm(2 * n), L = sqrt(n) + 1;
@@ -253,7 +253,7 @@ Poly compound(Poly f, Poly g) {
 
 /*
  * Description: get F(x) for F(G(x)) = x
- * Time: O((4 sqrt(n) + 2) M(n) + n ^ 2)
+ * Time: O(n sqrt n log n + n ^ 2)
  */
 Poly compoundInv(Poly g) { // 
     int n = g.size(), k = norm(2 * n), L = sqrt(n) + 1;
