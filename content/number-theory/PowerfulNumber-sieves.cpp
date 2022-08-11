@@ -17,7 +17,7 @@ void sieves() {
     for (int i = 2; i < N; ++i) {
         if (!vis[i]) pr.push_back(i);
         for (auto p: pr) {
-            if (i * p > N) break;
+            if (i * p >= N) break;
             vis[i * p] = 1;
             if (i % p == 0) break;
         }
