@@ -110,11 +110,11 @@ struct Poly : public vector<int> {
         int n = deg() + a.deg() - 1;
         return conv(T, a, norm(n)).pre(n);
     }
-    // f_i = sum a_{i + j} * T_j
+    // Description: f_i = sum a_{i + j} * T_j
     Poly mulT(const Poly& a) const { return T * a.rev() >> (a.deg() - 1); }
 
     /*
-     * Description: calculate f_1, ..., f_{n - 1} with f_i = sum f_{i - j} * T_j, T and f_0 is known.
+     * Description: Calculate f_1, ..., f_{n - 1} with f_i = sum_{j > 0} f_{i - j} g_j, where g and f_0 is known, notice T = g >> 1.
      * Time: O(n log^2 n)
      */
     template <typename func>
