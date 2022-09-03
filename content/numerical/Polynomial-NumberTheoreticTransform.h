@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-const int N = 1 << 18, P = 998244353;
+const int N = 1 << 18, P = 998244353; // N = 2 ^ k
 using ll = int64_t;
 
 #define inc(a, b) (((a) += (b)) >= P ? (a) -= P : 0)
@@ -24,7 +24,7 @@ int inv[N], fac[N], ifac[N], _ = [] {
 }();
 
 namespace NTT {
-const int G = 3, L = 1 << 18;
+const int G = 3, L = N;
 int W[L], _ = [] {
     W[L / 2] = 1;
     for (int i = L / 2 + 1, wn = POW(G, P / L); i < L; ++i) W[i] = mul(W[i - 1], wn);
