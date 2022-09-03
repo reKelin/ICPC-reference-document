@@ -24,11 +24,11 @@ int inv[N], fac[N], ifac[N], _ = [] {
 }();
 
 namespace NTT {
-const int G = 3, L = N;
-int W[L], _ = [] {
-    W[L / 2] = 1;
-    for (int i = L / 2 + 1, wn = POW(G, P / L); i < L; ++i) W[i] = mul(W[i - 1], wn);
-    for (int i = L / 2 - 1; ~i; --i) W[i] = W[i << 1];
+const int G = 3;
+int W[N], _ = [] {
+    W[N / 2] = 1;
+    for (int i = N / 2 + 1, wn = POW(G, P / N); i < N; ++i) W[i] = mul(W[i - 1], wn);
+    for (int i = N / 2 - 1; ~i; --i) W[i] = W[i << 1];
     return 0;
 }();
 void dft(int *a, int n) {
