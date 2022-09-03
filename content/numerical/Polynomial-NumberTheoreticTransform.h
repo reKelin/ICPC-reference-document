@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-const int N = 1 << 18, P = 998244353; // N = 2 ^ k
+const int N = 1 << 18, pG = 3, P = 998244353; // N = 2 ^ k
 using ll = int64_t;
 
 #define inc(a, b) (((a) += (b)) >= P ? (a) -= P : 0)
@@ -13,24 +13,20 @@ int POW(ll a, int b = P - 2, ll x = 1) {
     return x;
 }
 
-int inv[N], fac[N], ifac[N], _ = [] {
+int inv[N], fac[N], ifac[N], W{N], _ = [] {
     fac[0] = fac[1] = ifac[0] = ifac[1] = inv[1] = 1;
     for (ll i = 2; i < N; ++i) {
         fac[i] = fac[i - 1] * i % P;
         inv[i] = (P - P / i) * inv[P % i] % P;
         ifac[i] = (ll)ifac[i - 1] * inv[i] % P;
     }
+    W[N / 2] = 1;
+    for (int i = N / 2 + 1, wn = POW(pG, P / N); i < N; ++i) W[i] = mul(W[i - 1], wn);
+    for (int i = N / 2 - 1; ~i; --i) W[i] = W[i << 1];
     return 0;
 }();
 
 namespace NTT {
-const int G = 3;
-int W[N], _ = [] {
-    W[N / 2] = 1;
-    for (int i = N / 2 + 1, wn = POW(G, P / N); i < N; ++i) W[i] = mul(W[i - 1], wn);
-    for (int i = N / 2 - 1; ~i; --i) W[i] = W[i << 1];
-    return 0;
-}();
 void dft(int *a, int n) {
     for (int k = n >> 1; k; k >>= 1)
         for (int i = 0; i < n; i += k << 1)
