@@ -13,7 +13,7 @@ int POW(ll a, int b = P - 2, ll x = 1) {
     return x;
 }
 
-int inv[N], fac[N], ifac[N], W{N], _ = [] {
+int inv[N], fac[N], ifac[N], W[N], _ = [] {
     fac[0] = fac[1] = ifac[0] = ifac[1] = inv[1] = 1;
     for (ll i = 2; i < N; ++i) {
         fac[i] = fac[i - 1] * i % P;
@@ -40,9 +40,9 @@ void idft(int *a, int n) {
     for (int k = 1; k < n; k <<= 1)
         for (int i = 0; i < n; i += k << 1)
             for (int j = 0; j < k; ++j) {
-                int x = a[i + j], y = mul(a[i + j + k], W[k + j]);
+                int &x = a[i + j], y = mul(a[i + j + k], W[k + j]);
                 a[i + j + k] = x < y ? x - y + P : x - y;
-                inc(a[i + j], y);
+                inc(x, y);
             }
     for (int i = 0, in = P - (P - 1) / n; i < n; ++i)
         a[i] = mul(a[i], in);
@@ -268,5 +268,3 @@ Poly compoundInv(Poly g) { //
     }
     return f ^ Poly(inv, inv + N);
 }
-
-int main() { return 0; }
