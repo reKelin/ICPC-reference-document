@@ -157,14 +157,6 @@ struct Poly : public vector<int> {
         return x.pre(n);
     }
     Poly exp2(int n) const { return deriv().semiConv({1}, n, [&](Poly &f, int m) { f[m] = mul(f[m], ::inv[m]); }); }
-    Poly sqrt(int n) const {
-        Poly x{1}, y{1}; // x[0] = sqrt(T[0]), default T[0] = 1
-        for (int k = 1; k < n; k <<= 1) {
-            x.append((((pre(k << 1) - x * x) >> k) * y).pre(k) * ((P + 1) >> 1));
-            k << 1 < n ? y.append(-((conv(x.pre(k << 1), y, k << 1) >> k) * y).pre(k)) : void();
-        }
-        return x.pre(n);
-    }
     Poly pow(int k, int n) const { return (log(n) * k).exp(n); } // T[0] = 1
     Poly pow(int k, int kp, int n) const { // k = K % P, kp = K % phi(P)
         int i = 0;
@@ -172,6 +164,14 @@ struct Poly : public vector<int> {
         if (1ll * i * k >= n) return Poly(n);
         int v = T[i], m = n - i * k;
         return ((((T >> i) * fpow(v)).log(m) * k).exp(m) << (i * k)) * fpow(v, kp);
+    }
+    Poly sqrt(int n) const {
+        Poly x{1}, y{1}; // x[0] = sqrt(T[0]), default T[0] = 1
+        for (int k = 1; k < n; k <<= 1) {
+            x.append((((pre(k << 1) - x * x) >> k) * y).pre(k) * ((P + 1) >> 1));
+            k << 1 < n ? y.append(-((conv(x.pre(k << 1), y, k << 1) >> k) * y).pre(k)) : void();
+        }
+        return x.pre(n);
     }
     vector<Poly> operator/(const Poly &a) const {
         int k = deg() - a.deg() + 1;
