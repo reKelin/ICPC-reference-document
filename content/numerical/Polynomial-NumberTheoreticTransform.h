@@ -107,7 +107,7 @@ struct Poly : public vector<int> {
         int n = deg() + a.deg() - 1;
         return conv(T, a, norm(n)).pre(n);
     }
-    // Description: f_i = sum a_{i + j} * T_j
+    // Description: f_i = sum T_{i + j} * a_j
     Poly mulT(const Poly& a) const { return T * a.rev() >> (a.deg() - 1); }
 
     /*
