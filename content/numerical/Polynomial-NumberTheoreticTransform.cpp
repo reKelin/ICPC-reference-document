@@ -165,6 +165,7 @@ struct Poly : public vector<int> {
         }
         return x.pre(n);
     }
+    Poly pow(int k, int n) const { return (log(n) * k).exp(n); } // T[0] = 1
     Poly pow(int k, int kp, int n) const { // k = K % P, kp = K % phi(P)
         int i = 0;
         while (i < deg() && !T[i]) i++;
