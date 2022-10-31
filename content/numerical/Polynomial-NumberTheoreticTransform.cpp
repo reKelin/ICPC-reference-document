@@ -7,7 +7,8 @@ using ll = int64_t;
 #define inc(a, b) (((a) += (b)) >= P ? (a) -= P : 0)
 #define dec(a, b) (((a) -= (b)) < 0 ? (a) += P : 0)
 #define mul(a, b) (ll(a) * (b) % P)
-int POW(ll a, int b = P - 2, ll x = 1) {
+
+int fpow(ll a, int b = P - 2, ll x = 1) {
     for (; b; b >>= 1, a = a * a % P)
         if (b & 1) x = x * a % P;
     return x;
@@ -21,7 +22,7 @@ int inv[N], fac[N], ifac[N], W[N], _ = [] {
         ifac[i] = (ll)ifac[i - 1] * inv[i] % P;
     }
     W[N / 2] = 1;
-    for (int i = N / 2 + 1, wn = POW(pG, P / N); i < N; ++i) W[i] = mul(W[i - 1], wn);
+    for (int i = N / 2 + 1, wn = fpow(pG, P / N); i < N; ++i) W[i] = mul(W[i - 1], wn);
     for (int i = N / 2 - 1; ~i; --i) W[i] = W[i << 1];
     return 0;
 }();
@@ -131,7 +132,7 @@ struct Poly : public vector<int> {
     }
 
     Poly inv(int n) const {
-        Poly x{POW(T[0])};
+        Poly x{fpow(T[0])};
         for (int k = 1; k < n; k <<= 1)
             x.append(-((conv(pre(k << 1), x, k << 1) >> k) * x).pre(k));
         return x.pre(n);
@@ -169,7 +170,7 @@ struct Poly : public vector<int> {
         while (i < deg() && !T[i]) i++;
         if (1ll * i * k >= n) return Poly(n);
         int v = T[i], m = n - i * k;
-        return ((((T >> i) * POW(v)).log(m) * k).exp(m) << (i * k)) * POW(v, kp);
+        return ((((T >> i) * fpow(v)).log(m) * k).exp(m) << (i * k)) * fpow(v, kp);
     }
     vector<Poly> operator/(const Poly &a) const {
         int k = deg() - a.deg() + 1;
