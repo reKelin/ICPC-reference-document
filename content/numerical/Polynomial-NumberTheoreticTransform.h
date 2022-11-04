@@ -130,6 +130,11 @@ struct Poly : public vector<int> {
         }
         return f;
     }
+    Poly inv2(int n) const {
+        int i0 = fpow(T[0]);
+        return (T >> 1).semiConv({i0}, n, [&](Poly &f, int m) { f[m] = mul(f[m], P - i0); });
+    }
+    Poly exp2(int n) const { return deriv().semiConv({1}, n, [&](Poly &f, int m) { f[m] = mul(f[m], ::inv[m]); }); }
 
     Poly inv(int n) const {
         Poly x{fpow(T[0])};
@@ -156,7 +161,6 @@ struct Poly : public vector<int> {
             x.append((x * ((pre(k << 1) - x.log(k << 1)) >> k)).pre(k));
         return x.pre(n);
     }
-    Poly exp2(int n) const { return deriv().semiConv({1}, n, [&](Poly &f, int m) { f[m] = mul(f[m], ::inv[m]); }); }
     Poly pow(int k, int n) const { return (log(n) * k).exp(n); } // T[0] = 1
     Poly pow(int k, int kp, int n) const { // k = K % P, kp = K % phi(P)
         int i = 0;
