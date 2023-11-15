@@ -25,6 +25,7 @@ struct Z {
 // Defualt Time: O(n^3)
 struct Mat : vector<vector<int>> {
 #define T (*this)
+    Mat(const vector<vector<int>> &a) { T = a; };
     Mat(int n = 0, int m = 0) { T.assign(n, vector<int>(m)); }
     static Mat I(int n) {
         Mat a(n, n);
